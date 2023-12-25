@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
     font-family: Fira Sans;
+}
+
+.tour-image {
+    @apply h-1/2 object-cover;
+}
+
+.tour-link {
+    @apply ml-5 text-xs md:text-base text-teal-600 hover:underline hover:cursor-pointer;
+}
+
+.tour-title {
+    @apply ml-5 text-2xl md:text-4xl text-slate-800;
+}
+
+.tour-text {
+    @apply ml-5 mr-5 italic text-xs md:text-base text-slate-500;
+}
+
+.tour-time {
+    @apply ml-5 text-xs md:text-base text-slate-700 font-light;
+}
+
+.tour-button {
+    @apply text-xs md:text-base border rounded-sm border-gray-400 mb-5 mr-2 text-slate-700 p-1 hover:bg-slate-300 hover:cursor-pointer;
 }
