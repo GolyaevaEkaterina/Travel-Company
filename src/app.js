@@ -16,8 +16,11 @@ async function renderTours() {
             new Date(tour.startTime)
         )
         container.innerHTML += `
-        <div class="bg-slate-200 shadow-2xl flex flex-col gap-y-3">
-                        <img class="tour-image" src="${tour.image}" />
+        <div class="bg-slate-200 shadow-2xl flex flex-col gap-y-3" id="container-basic">
+                        <div class="w-full h-full relative">
+                           <img class="tour-image" src="${tour.image}" />
+                           <div class="absolute inset-0 bg-black opacity-40" id="container-upper"></div>
+                        </div>
                         <p class="tour-date"> ${format(
                             new Date(tour.startTime),
                             "dd MMMM",
@@ -37,7 +40,39 @@ async function renderTours() {
                             </button>
                         </div>
                         `
+    
+        // const basicContainer = document.getElementById('container-basic')
+        // basicContainer.addEventListener('mouseover', removeUpperContainer)
+
+        // basicContainer.addEventListener('mouseout', removeReturnContainer)
+    
     })
+
+    tours.forEach((tour) => {
+        const basicContainer = document.getElementById(`container-basic-${book.id}`)
+        const makeRemoveUpperContainer = () => removeUpperContainer(tour.id)
+        basicContainer.addEventListener('mouseover', makeRemoveUpperContainer)
+  
+        
+  
+        // const buttonOpenFormEditBook = document.getElementById(`editBook__Open-form-${book.id}`)
+        // buttonOpenFormEditBook.addEventListener('click', () => {
+        //   currentEditBookId = book.id
+        //   openModalEditBook()
+        })
 }
+
+
+
+function removeUpperContainer() {
+  const upperContainer = document.getElementById('container-upper')
+  upperContainer.style.display = "none"
+}
+
+function removeReturnContainer() {
+  const upperContainer = document.getElementById('container-upper')
+  upperContainer.style.display = "flex"
+}
+
 
 renderTours()

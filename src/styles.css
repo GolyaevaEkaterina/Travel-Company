@@ -7,7 +7,7 @@ body {
 }
 
 .tour-image {
-    @apply h-1/2 object-cover;
+    @apply h-full object-cover;
 }
 
 .tour-date {
