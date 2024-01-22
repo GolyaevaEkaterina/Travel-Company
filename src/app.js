@@ -115,11 +115,11 @@ async function renderTours() {
 
     tours.forEach((tour) => {
         const basicContainer = document.getElementById(`container-basic-${tour.id}`)
-        const makeRemoveUpperContainer = () => removeUpperContainer(tour.id)
+        const makeRemoveUpperContainer = () => removeUpperContainer(tour)
         basicContainer.addEventListener('mouseover', makeRemoveUpperContainer)
   
         const upperContainer = document.getElementById(`container-upper-${tour.id}`)
-        const makeReturnUpperContainer = () => removeUpperContainer(tour.id)
+        const makeReturnUpperContainer = () => returnUpperContainer(tour)
         basicContainer.addEventListener('mouseout', makeReturnUpperContainer)
   
         })
@@ -136,6 +136,5 @@ function returnUpperContainer(tour) {
   const upperContainer = document.getElementById(`container-upper-${tour.id}`)
   upperContainer.style.display = "flex"
 }
-
 
 renderTours()
