@@ -23,34 +23,65 @@
         <div class="bg-slate-100 box-border pt-8 md:pt-20">
             <div class="max-w-screen-xl mx-auto bg-slate-50 bg-slate-100">
                 <div class="grid grid-cols-2 relative shadow-2xl">
-                    <img class="w-full h-full object-cover" src="/src/images/6.jpg" />
-                    <img class="w-full h-full object-cover" src="/src/images/5.jpg" />
-                    <img class="w-full h-full object-cover" src="/src/images/7.jpeg" />
-                    <img class="w-full h-full object-cover" src="/src/images/8.png" />
+                    <img class="w-full h-full object-cover" src="/src/images/6.jpg"/>
+                    <img class="w-full h-full object-cover" src="/src/images/5.jpg"/>
+                    <img class="w-full h-full object-cover" src="/src/images/7.jpeg"/>
+                    <img class="w-full h-full object-cover" src="/src/images/8.png"/>
 
-                    <div
-                        class="text-center absolute left-0 top-0 right-0 bottom-0 flex flex-col justify-center items-center"
-                    >
+                    <div class="text-center absolute left-0 top-0 right-0 bottom-0 flex flex-col justify-center items-center">
                         <div class="bg-slate-100 p-5">
-                            <h1
-                                class="text-2xl md:text-6xl text-slate-800 font-medium"
-                            >
-                                TravelDream
-                            </h1>
-                            <p class="text-base italic text-slate-500">
-                                Путешествия на край Света 
-                            </p>
+                            <h1 class="text-2xl md:text-6xl text-slate-800 font-medium">TravelDream</h1>
+                            <p class="text-base italic text-slate-500">Путешествия на край Света</p>
                         </div>
                     </div>
                 </div>
 
-                <div
-                    class="mt-12 md:mt-20 mb-20 grid grid-cols-1 gap-x-5 gap-y-8 bg-slate-50 md:grid-cols-2 lg:grid-cols-3"
-                    id="container-tours"
-                ></div>
+                <div class="mt-12 md:mt-20 mb-20 grid grid-cols-1 gap-x-5 gap-y-8 bg-slate-50 md:grid-cols-2 lg:grid-cols-3" id="container-tours"></div>
+
+                <div class="hidden flex-col fixed inset-0 bg-black/70 z-50" id="modal-reservation">
+                    <h2 class="mx-auto mt-20 max-w-5xl text-center text-slate-50 text-4xl font-medium">Бронирование</h2>
+                    
+                        <div class="w-1/2 h-2/3 mx-auto mt-10 bg-slate-200 shadow-lg shadow-slate-100">
+                            <div  id="reservaition_container"></div>
+                            
+                            <div class="p-6">
+                                <form action="">
+                                    <div class="grid gap-6 lg:grid-cols-2 flex-wrap">
+                                        <div class="reservation-input-container">
+                                            <label for="firstName">Имя</label>
+                                            <input type="text" id="firstName" class="reservation-input"/>
+                                        </div>
+                                        <div class="reservation-input-container">
+                                            <label for="lastName">Фамилия</label>                                    
+                                            <input type="text" id="lastName" class="reservation-input"/>
+                                        </div>
+                                        <div class="reservation-input-container">
+                                            <label for="phone">Телефон</label>
+                                            <input type="number" id="phone" class="reservation-input"/>
+                                        </div>
+                                        <div class="reservation-input-container">
+                                            <label for="email">Email</label>
+                                            <input type="text" id="email" class="reservation-input"/>
+                                        </div>
+                                        <div class="reservation-input-container  col-span-2">
+                                            <label for="comment">Комментарий</label>
+                                            <input type="text" id="comment" class="reservation-input"/>
+                                        </div>
+
+                                    </div>
+                                    
+                                    <button class="button tour-button mt-6" id="sendOrderRequest_button" type="submit">Отправить</button>
+                                </form>
+                            </div>
+   
+                        </div>
+
+                        
+                    
+                </div>
             </div>
         </div>
-        
+
         <script type="module" src="/src/app.js"></script>
     </body>
 </html>
