@@ -130,25 +130,27 @@ async function openModalReservation() {
             </div>
         </div>
 
-        <div class="country bg-slate-300/90 px-3">
-            <h2 class="tour-title-reservaition">${tour.country}.</h2>
-            <h4 class="tour-city-reservaition" id="reservaition_city">${tour.city}.</h4>
-        </div>
-        
-        <div class="absolute right-1 bottom-1 bg-slate-300/90">
-           <p class="tour-date"> ${format(
-             new Date(tour.startTime),
-             "dd MMMM",
-             { locale: ru }
-              )} - ${format(new Date(tour.endTime), "dd MMMM   ", {
-             locale: ru
-             })}  ${duration} дней</p>
+        <div class="grid grid-cols-1">
+            <div class="country bg-slate-300/90 px-3">
+                <h2 class="tour-title-reservaition">${tour.country}.</h2>
+                <h4 class="tour-city-reservaition" id="reservaition_city">${tour.city}.</h4>
+            </div>
+            
+            <div class="absolute right-1 bottom-1 bg-slate-300/90">
+               <p class="tour-date"> ${format(
+                 new Date(tour.startTime),
+                 "dd MMMM",
+                 { locale: ru }
+                  )} - ${format(new Date(tour.endTime), "dd MMMM   ", {
+                 locale: ru
+                 })}  ${duration} дней</p>
 
-           <div class="flex items-center mx-5 text-slate-500">
-               <i class="fa-solid fa-ruble-sign"></i>
-               <p class="tour-price" id="reservaition_price">${tour.price}</p>
-           </div>
-        </div>   
+               <div class="flex items-center mx-5 text-slate-500">
+                   <i class="fa-solid fa-ruble-sign"></i>
+                   <p class="tour-price" id="reservaition_price">${tour.price}</p>
+               </div>
+            </div>  
+        </div> 
     </div>
     `
     
@@ -182,7 +184,7 @@ async function sendOrderRequest(){
     body: JSON.stringify(params)
   })
 
-  let data = await response.json()
+  let data = await responсe.json()
   console.log(data)
 
   alert(data)
