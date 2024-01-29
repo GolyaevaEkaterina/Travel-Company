@@ -151,15 +151,13 @@ async function openModalReservation() {
         </div>   
     </div>
     `
-    const buttonSendOrderRequest = document.getElementById("sendOrderRequest_button")
-    buttonSendOrderRequest.addEventListener("click", () => {
-        sendOrderRequest()
-    })
+    
 }
 
 
 async function sendOrderRequest(){
   console.log(currentReservationTourId)
+  closeModalReservation()
 
   const firstName = document.getElementById('firstName').value
   const lastName = document.getElementById('lastName').value
@@ -167,7 +165,10 @@ async function sendOrderRequest(){
   const email = document.getElementById('email').value
   const comment = document.getElementById('comment').value
 
-  const url = "https://www.bit-by-bit.ru/api/student-projects/tours/[currentReservationTourId]"
+  const url = `https://www.bit-by-bit.ru/api/student-projects/tours/${currentReservationTourId}`
+  console.log(url)
+
+
   const params = {
     customerName: firstName + lastName,
     phone: phone,
@@ -185,6 +186,8 @@ async function sendOrderRequest(){
   console.log(data)
 
   alert(data)
+
+  closeModalReservation()
 }
 
 function removeUpperContainer(tour) {
@@ -197,6 +200,12 @@ function returnUpperContainer(tour) {
     upperContainer.style.display = "flex"
 }
 
+function closeModalReservation(){
+    const modalReservation = document.getElementById("modal-reservation")
+    modalReservation.style.display = "none"   
+}
 
+const buttonSendOrderRequest = document.getElementById("sendOrderRequest_button")
+buttonSendOrderRequest.addEventListener("click", sendOrderRequest)
 
 renderTours()
