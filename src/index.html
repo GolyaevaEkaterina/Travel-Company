@@ -20,7 +20,11 @@
     </head>
 
     <body>
-        <div class="bg-slate-100 box-border pt-8 md:pt-20">
+        <div class="bg-slate-100 box-border">
+            <nav class="flex justify-end gap-x-5 bg-slate-100 box-border max-w-screen-xl mx-auto">
+                <a href="#container-tours" class="footer-link">Список туров</a>
+                <a class="footer-link flex gap-x-4 items-center" href="/src/favorites.html">Избранное<i class="fa-regular fa-heart"></i></a>
+            </nav>
             <div class="max-w-screen-xl mx-auto bg-slate-50 bg-slate-100">
                 <div class="grid grid-cols-2 relative shadow-2xl">
                     <img class="w-full h-full object-cover" src="/src/images/6.jpg"/>
@@ -36,12 +40,16 @@
                     </div>
                 </div>
 
-                <div class="mt-12 md:mt-20 mb-20 grid grid-cols-1 gap-x-5 gap-y-8 bg-slate-50 md:grid-cols-2 lg:grid-cols-3" id="container-tours"></div>
+                <div class="mt-12 md:mt-20 mb-20 grid grid-cols-1 gap-x-5 gap-y-8 bg-slate-50 md:grid-cols-2 lg:grid-cols-3 " id="container-tours"></div>
 
                 <div class="hidden flex-col fixed inset-0 bg-black/70 z-50" id="modal-reservation">
-                    <h2 class="mx-auto mt-2 md:mt-20 max-w-5xl text-center text-slate-50 text-4xl font-medium">Бронирование</h2>
+                    <div class="max-w-screen-xl lg:w-1/2 mx-auto mt-2 flex">
+                        <h2 class="mx-auto mt-2 md:mt-10 max-w-5xl text-center text-slate-50 text-4xl font-medium">Бронирование</h2>
+                        <button class="md:mt-10 self-end justify-self-end text-slate-50 text-2xl font-medium hover:text-slate-300" id="close_Modal_Reservation-button"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
                     
-                        <div class="w-full mx-2 mt-2 md:w-2/3 md:mx-auto lg:w-1/2 md:h-2/3 lg:mx-auto md:mt-10 bg-slate-200 shadow-lg shadow-slate-100">
+                    
+                        <div class="w-full mx-2 mt-2 md:w-2/3 md:mx-auto lg:w-1/2 md:h-fit lg:mx-auto md:mt-2 bg-slate-200 shadow-lg shadow-slate-100">
                             <div  id="reservaition_container"></div>
                             
                             <div class="p-6">
