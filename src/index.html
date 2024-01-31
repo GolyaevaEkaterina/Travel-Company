@@ -64,7 +64,8 @@
                                             <input type="text" id="lastName" class="reservation-input"/>
                                         </div>
                                         <div class="reservation-input-container">
-                                            <label for="phone">Телефон</label>
+                                            <label for="phone" id="phone-label">Телефон</label>
+                                            <label for="phone" id="phone-label-two" class="hidden text-red-600">Укажите телефон!</label>
                                             <input type="number" id="phone" class="reservation-input"/>
                                         </div>
                                         <div class="reservation-input-container">
@@ -84,7 +85,16 @@
    
                         </div>
 
-                        
+                </div>
+
+                <div class="hidden flex justify-center items-center fixed inset-0 bg-black/70 z-50" id="answer-to-request">
+                    <div class="flex gap-2 justify-center items-center">
+                        <div class="w-64 h-20 p-2 mx-auto mt-2 flex bg-slate-200 shadow-md shadow-slate-100">
+                            <p class="text-xl text-center text-slate-700">Поздравляем! Тур забронирован!</p>
+                        </div>
+                        <button class="self-start text-slate-50 text-xl font-medium hover:text-slate-300" id="answer-to-request_close_Button"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    
                     
                 </div>
             </div>

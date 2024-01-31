@@ -155,15 +155,22 @@ async function openModalReservation() {
 }
 
 
+const inputFirstName = document.getElementById('firstName')
+const inputLastName = document.getElementById('lastName')
+const inputPhone = document.getElementById('phone')
+const inputEmail = document.getElementById('email')
+const inputComment = document.getElementById('comment')
+
+
+
 async function sendOrderRequest(){
   console.log(currentReservationTourId)
-  closeModalReservation()
 
-  const firstName = document.getElementById('firstName').value
-  const lastName = document.getElementById('lastName').value
-  const phone = document.getElementById('phone').value
-  const email = document.getElementById('email').value
-  const comment = document.getElementById('comment').value
+  const firstName = inputFirstName.value
+  const lastName = inputLastName.value
+  const phone = inputPhone.value
+  const email = inputEmail.value
+  const comment = inputComment.value
 
   const url = `https://www.bit-by-bit.ru/api/student-projects/tours/${currentReservationTourId}`
   console.log(url)
@@ -177,18 +184,50 @@ async function sendOrderRequest(){
   }
   console.log(params)
 
-  let response = await fetch( url, {
-    method: "POST",
-    body: JSON.stringify(params)
-  })
+  if(validate(firstName, lastName, phone, email,  inputFirstName, inputLastName, inputEmail )){
+    try{
+        let response = await fetch( url, {
+        method: "POST",
+        body: JSON.stringify(params)
+        })
 
-  let data = await response.json()
-  console.log(data)
+        let data = await response.json()
+        console.log(data)
 
-  alert(data)
+        closeModalReservation()
+        showAnswerToRequest()
+    }catch{
+        alert("Ошибка, попробуйте позже.")
+    }    
+  }
 
-  closeModalReservation()
 }
+
+function validate(firstName, lastName, phone, email,  inputFirstName, inputLastName, inputEmail ) {
+      if (firstName == false){
+        inputFirstName.value = "Укажите свое имя!"
+        inputFirstName.style.color = "red"
+
+      } if (lastName == false){
+        inputLastName.value = "Укажите фамилию!"
+        inputLastName.style.color = "red"
+  
+      } if (phone == false){
+        document.getElementById("phone-label-two").style.display = "flex"
+        document.getElementById("phone-label").style.display = "none"
+   
+      } if (email == false){
+        inputEmail.value = "Укажите адрес Вашей почты!"
+        inputEmail.style.color = "red"
+     
+      } if (firstName == false || lastName == false || phone == false || email == false ){
+        return false
+      }
+
+      return true
+}
+
+
 
 async function addToFavorites() {
     const responce = await fetch(
@@ -266,12 +305,29 @@ function returnUpperContainer(tour) {
 function closeModalReservation(){
     const modalReservation = document.getElementById("modal-reservation")
     modalReservation.style.display = "none"
-    clearContainerReservationTour()   
+    clearContainerReservationTour()
+    clearForm()
+    changeTextColorInputPhone()   
 }
 
+function showAnswerToRequest(){
+    document.getElementById("answer-to-request").style.display = "flex"
+}
 
 function clearContainerReservationTour() {
     document.getElementById('reservaition_container').innerHTML = ''
+}
+
+function clearForm(){
+    inputFirstName.value = ""
+    inputLastName.value = ""
+    inputPhone.value = ""
+    inputEmail.value = ""
+    inputComment.value = ""
+}
+
+function closeAnswerToRequest(){
+    document.getElementById("answer-to-request").style.display = "none"
 }
 
 const buttonSendOrderRequest = document.getElementById("sendOrderRequest_button")
@@ -280,4 +336,35 @@ buttonSendOrderRequest.addEventListener("click", sendOrderRequest)
 const buttonCloseModalReservation = document.getElementById("close_Modal_Reservation-button")
 buttonCloseModalReservation.addEventListener("click", closeModalReservation)
 
+
+
+
 renderTours()
+
+const buttonCloseAnswerToRequest = document.getElementById("answer-to-request_close_Button")
+buttonCloseAnswerToRequest.addEventListener("click", closeAnswerToRequest)
+
+function changeTextColorInputFirstName() {
+    inputFirstName.style.color = "black"
+    inputFirstName.value = ""
+}
+inputFirstName.addEventListener("click", changeTextColorInputFirstName)
+
+function changeTextColorInputLastName() {
+    inputLastName.style.color = "black"
+    inputLastName.value = ""
+}
+inputLastName.addEventListener("click", changeTextColorInputLastName)
+
+function changeTextColorInputPhone() {
+    document.getElementById("phone-label-two").style.display = "none"
+    document.getElementById("phone-label").style.display = "flex"
+}
+
+
+function changeTextColorInputEmail() {
+    inputEmail.style.color = "black"
+    inputEmail.value = ""
+}
+inputEmail.addEventListener("click", changeTextColorInputEmail)
+
