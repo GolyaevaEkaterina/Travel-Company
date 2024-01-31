@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
 body {
     font-family: Fira Sans;
-    box-sizing: border-box
-}
+}    
 
-.tour{
+.footer-link{
+    @apply text-xs md:text-base font-medium border rounded-sm border-gray-400 my-5 ml-5 text-slate-700 px-6 py-2 hover:bg-slate-300 hover:cursor-pointer;
+}
+.tour {
     @apply bg-slate-200 shadow-2xl flex flex-col gap-y-3 h-96 hover:scale-105 duration-150 ease-linear;
 }
 .tour-image {
@@ -15,19 +21,26 @@ body {
 }
 
 .tour-date {
-    @apply ml-5 text-xs md:text-base text-teal-600;
+    @apply mx-5 text-xs md:text-base text-teal-600;
 }
 
-.country{
-    @apply absolute left-0 bottom-0 z-30 flex items-end pb-3;
+.country {
+    @apply absolute left-1 bottom-1 z-30 flex items-end py-3 ;
 }
 
 .tour-title {
     @apply ml-5 text-2xl md:text-5xl  text-slate-50;
 }
 
-.tour-city{
+.tour-title-reservaition {
+    @apply ml-5 text-2xl md:text-5xl  text-slate-600;
+}
+
+.tour-city {
     @apply text-lg md:text-2xl  text-slate-50;
+}
+.tour-city-reservaition {
+    @apply text-lg md:text-2xl  text-slate-600;
 }
 
 .tour-price {
@@ -38,6 +51,18 @@ body {
     @apply ml-5 text-xs md:text-xl text-slate-50 font-normal;
 }
 
+.tour-hotel-reservaition {
+    @apply ml-5 text-xs md:text-3xl text-slate-50 font-normal;
+}
+
 .tour-button {
-    @apply text-xs md:text-base border rounded-sm border-gray-400 mb-5 mr-2 text-slate-700 p-1 hover:bg-slate-300 hover:cursor-pointer;
+    @apply text-xs md:text-base border rounded-sm border-gray-400 mr-2 text-slate-700 p-1 hover:bg-slate-300 hover:cursor-pointer;
+}
+
+.reservation-input {
+    @apply h-10 p-2 bg-slate-200 border rounded-sm border-gray-400 focus:bg-slate-100/50 focus:outline-none hover:shadow-lg hover:shadow-slate-100 focus:shadow-lg focus:shadow-slate-100
+}
+
+.reservation-input-container {
+    @apply flex flex-col
 }

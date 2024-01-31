@@ -20,37 +20,86 @@
     </head>
 
     <body>
-        <div class="bg-slate-100 box-border pt-8 md:pt-20">
+        <div class="bg-slate-100 box-border">
+            <nav class="flex justify-end gap-x-5 bg-slate-100 box-border max-w-screen-xl mx-auto">
+                <a href="#container-tours" class="footer-link">Список туров</a>
+                <a class="footer-link flex gap-x-4 items-center" href="/src/favorites.html">Избранное<i class="fa-regular fa-heart"></i></a>
+            </nav>
             <div class="max-w-screen-xl mx-auto bg-slate-50 bg-slate-100">
                 <div class="grid grid-cols-2 relative shadow-2xl">
-                    <img class="w-full h-full object-cover" src="/src/images/6.jpg" />
-                    <img class="w-full h-full object-cover" src="/src/images/5.jpg" />
-                    <img class="w-full h-full object-cover" src="/src/images/7.jpeg" />
-                    <img class="w-full h-full object-cover" src="/src/images/8.png" />
+                    <img class="w-full h-full object-cover" src="/src/images/6.jpg"/>
+                    <img class="w-full h-full object-cover" src="/src/images/5.jpg"/>
+                    <img class="w-full h-full object-cover" src="/src/images/7.jpeg"/>
+                    <img class="w-full h-full object-cover" src="/src/images/8.png"/>
 
-                    <div
-                        class="text-center absolute left-0 top-0 right-0 bottom-0 flex flex-col justify-center items-center"
-                    >
+                    <div class="text-center absolute left-0 top-0 right-0 bottom-0 flex flex-col justify-center items-center">
                         <div class="bg-slate-100 p-5">
-                            <h1
-                                class="text-2xl md:text-6xl text-slate-800 font-medium"
-                            >
-                                TravelDream
-                            </h1>
-                            <p class="text-base italic text-slate-500">
-                                Путешествия на край Света 
-                            </p>
+                            <h1 class="text-2xl md:text-6xl text-slate-800 font-medium">TravelDream</h1>
+                            <p class="text-base italic text-slate-500">Путешествия на край Света</p>
                         </div>
                     </div>
                 </div>
 
-                <div
-                    class="mt-12 md:mt-20 mb-20 grid grid-cols-1 gap-x-5 gap-y-8 bg-slate-50 md:grid-cols-2 lg:grid-cols-3"
-                    id="container-tours"
-                ></div>
+                <div class="mt-12 md:mt-20 mb-20 grid grid-cols-1 gap-x-5 gap-y-8 bg-slate-50 md:grid-cols-2 lg:grid-cols-3 " id="container-tours"></div>
+
+                <div class="hidden flex-col fixed inset-0 bg-black/70 z-50" id="modal-reservation">
+                    <div class="max-w-screen-xl lg:w-1/2 mx-auto mt-2 flex">
+                        <h2 class="mx-auto mt-2 md:mt-10 max-w-5xl text-center text-slate-50 text-4xl font-medium">Бронирование</h2>
+                        <button class="md:mt-10 self-end justify-self-end text-slate-50 text-2xl font-medium hover:text-slate-300" id="close_Modal_Reservation-button"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    
+                    
+                        <div class="w-full mx-2 mt-2 md:w-2/3 md:mx-auto lg:w-1/2 md:h-fit lg:mx-auto md:mt-2 bg-slate-200 shadow-lg shadow-slate-100">
+                            <div  id="reservaition_container"></div>
+                            
+                            <div class="p-6">
+                                
+                                    <div class="md:grid gap-6 lg:grid-cols-2 flex-wrap">
+                                        <div class="reservation-input-container">
+                                            <label for="firstName">Имя</label>
+                                            <input type="text" id="firstName" class="reservation-input"/>
+                                        </div>
+                                        <div class="reservation-input-container">
+                                            <label for="lastName">Фамилия</label>                                    
+                                            <input type="text" id="lastName" class="reservation-input"/>
+                                        </div>
+                                        <div class="reservation-input-container">
+                                            <label for="phone" id="phone-label">Телефон</label>
+                                            <label for="phone" id="phone-label-two" class="hidden text-red-600">Укажите телефон!</label>
+                                            <input type="number" id="phone" class="reservation-input"/>
+                                        </div>
+                                        <div class="reservation-input-container">
+                                            <label for="email">Email</label>
+                                            <input type="text" id="email" class="reservation-input"/>
+                                        </div>
+                                        <div class="reservation-input-container  col-span-2">
+                                            <label for="comment">Комментарий</label>
+                                            <input type="text" id="comment" class="reservation-input"/>
+                                        </div>
+
+                                    </div>
+                                    
+                                    <button class="button tour-button mt-6" id="sendOrderRequest_button" type="submit">Отправить</button>
+                                
+                            </div>
+   
+                        </div>
+
+                </div>
+
+                <div class="hidden flex justify-center items-center fixed inset-0 bg-black/70 z-50" id="answer-to-request">
+                    <div class="flex gap-2 justify-center items-center">
+                        <div class="w-64 h-20 p-2 mx-auto mt-2 flex bg-slate-200 shadow-md shadow-slate-100">
+                            <p class="text-xl text-center text-slate-700">Поздравляем! Тур забронирован!</p>
+                        </div>
+                        <button class="self-start text-slate-50 text-xl font-medium hover:text-slate-300" id="answer-to-request_close_Button"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    
+                    
+                </div>
             </div>
         </div>
-        
+
         <script type="module" src="/src/app.js"></script>
     </body>
 </html>
