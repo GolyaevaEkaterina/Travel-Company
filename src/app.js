@@ -2,16 +2,25 @@ import { format, differenceInDays } from "date-fns";
 import { da, ru } from "date-fns/locale"
 
 let currentReservationTourId
+// const tours = init()
+// console.log(tours)
 
+async function init() {
+	const responce = await fetch(
+		"https://www.bit-by-bit.ru/api/student-projects/tours"
+	)
+	tours = await responce.json()
+    // console.log(arr)
 
-async function renderTours() {
-    const responce = await fetch(
-        "https://www.bit-by-bit.ru/api/student-projects/tours"
-    )
-    const tours = await responce.json()
-    console.log(tours)
+    // return 
+    renderTours(tours)
+}
+
+async function renderTours(tours) {
 
     const container = document.getElementById("container-tours")
+    container.innerHTML = ''
+    const favoriteTours = getFavoriteTours()
 
     tours.forEach((tour) => {
         const duration = differenceInDays(
@@ -20,7 +29,8 @@ async function renderTours() {
         )
 
         const city = tour.city
-        console.log(city)
+        const isFavorite = favoriteTours.includes(tour.id)
+		// console.log(favoriteTours, isFavorite)
 
         container.innerHTML += `
         <div class="tour" id="container-basic-${tour.id}">
@@ -62,8 +72,9 @@ async function renderTours() {
                            <div class="flex justify-end">
                                <button class="tour-button w-full" id="modalReservation_open-button--${tour.id}">Забронировать</button>
                                <button class="tour-button w-10" id="add_to_Favorites-button--${tour.id}">
-                                   <i class="fa-regular fa-heart"></i>
+                               ${isFavorite ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>'}
                                </button>
+                               
                            </div>
                         </div>  
                         `
@@ -91,8 +102,7 @@ async function renderTours() {
 
         const buttonAddToFavorites = document.getElementById(`add_to_Favorites-button--${tour.id}`)
         buttonAddToFavorites.addEventListener("click", () => {
-            currentReservationTourId = tour.id
-            addToFavorites()
+            addToFavorites(tour.id, tours)
         })
     })
 }
@@ -102,6 +112,8 @@ async function openModalReservation() {
         "https://www.bit-by-bit.ru/api/student-projects/tours"
     )
     const tours = await responce.json()
+
+    // const tours = init()
 
     const modalReservation = document.getElementById("modal-reservation")
     modalReservation.style.display = "flex"
@@ -150,18 +162,14 @@ async function openModalReservation() {
             </div>  
         </div> 
     </div>
-    `
-    
+    `    
 }
-
 
 const inputFirstName = document.getElementById('firstName')
 const inputLastName = document.getElementById('lastName')
 const inputPhone = document.getElementById('phone')
 const inputEmail = document.getElementById('email')
 const inputComment = document.getElementById('comment')
-
-
 
 async function sendOrderRequest(){
   console.log(currentReservationTourId)
@@ -174,7 +182,6 @@ async function sendOrderRequest(){
 
   const url = `https://www.bit-by-bit.ru/api/student-projects/tours/${currentReservationTourId}`
   console.log(url)
-
 
   const params = {
     customerName: firstName + lastName,
@@ -200,7 +207,6 @@ async function sendOrderRequest(){
         alert("Ошибка, попробуйте позже.")
     }    
   }
-
 }
 
 function validate(firstName, lastName, phone, email,  inputFirstName, inputLastName, inputEmail ) {
@@ -227,69 +233,51 @@ function validate(firstName, lastName, phone, email,  inputFirstName, inputLastN
       return true
 }
 
+const getFavoriteTours = () => {
+	const favoriteTours = localStorage.getItem('favoriteTours') ? JSON.parse(localStorage.getItem('favoriteTours')) : []
+	return favoriteTours
+}
 
+async function addToFavorites(tourId, tours) {
 
-async function addToFavorites() {
-    const responce = await fetch(
-        "https://www.bit-by-bit.ru/api/student-projects/tours"
-    )
-    const tours = await responce.json()
+    console.log(tourId)
 
-    const tour = tours.find((t) => {
-        return t.id === currentReservationTourId
-    })
+    const favoriteTours = getFavoriteTours()
+    console.log(favoriteTours)
 
-    const duration = differenceInDays(
-      new Date(tour.endTime),
-      new Date(tour.startTime)
-    )
+    const isFavorite = favoriteTours.includes(tourId)
+    console.log(isFavorite)
 
-  const containerFavorites = document.getElementById("container-tours-favorites")
-  console.log(containerFavorites)
-  containerFavorites.innerHTML +=  `
-  <div class="tour" id="container-basic-${tour.id}">
-  <div class="w-full h-72 relative">
-     <img class="tour-image" src="${tour.image}" />
+    const index = tours.indexOf(tourId)
+    console.log(index)
 
-     <div class="absolute inset-0 bg-black/50 z-10" id="container-upper-${tour.id}"></div>
+    if(isFavorite){
+        favoriteTours.splice(index,1)
+        console.log(favoriteTours)
+        
+    }
 
-     <div class="flex justify-between pt-1 absolute bg-teal-900/50 top-0 right-0 left-0 z-20 ">
-       <p class="tour-hotel">${tour.hotelName}</p>
-       <div class="flex gap-2 mr-5 text-xl items-center text-emerald-300">
-         <i class="fa-solid fa-star"></i>
-         <p class="tour-hotel-rating">${tour.rating}</p>
-       </div>
-     </div>
+    const newFavoriteTours = [...favoriteTours, tourId]
+    // console.log(newFavoriteTours)
 
-     <div class="country">
-         <h2 class="tour-title">${tour.country}.</h2>
-         <h4 class="tour-city" id="city_of_tour-${tour.id}">${
-             tour.city
-         }</h4>
-     </div>
+    localStorage.setItem('favoriteTours', JSON.stringify(newFavoriteTours))
 
-  </div>
-  <p class="tour-date"> ${format(
-      new Date(tour.startTime),
-      "dd MMMM",
-      { locale: ru }
-  )} - ${format(new Date(tour.endTime), "dd MMMM   ", {
-      locale: ru
-  })}  ${duration} дней</p>
-  
-  <div class="flex justify-between ml-5 mr-5 items-center">
-     <div class="flex items-center mb-5 text-slate-500">
-       <i class="fa-solid fa-ruble-sign"></i>
-       <p class="tour-price">${tour.price}</p>
-     </div>
-  
-     <div class="flex justify-end">
-         <button class="tour-button w-full" id="modalReservation_open-button--${
-             tour.id
-         }">Забронировать</button>
-     </div>
-  </div>  
-  `
+    renderTours(tours)
+}
+
+const renderFavoriteTours = async () => {
+	const responce = await fetch(
+		"https://www.bit-by-bit.ru/api/student-projects/tours"
+	)
+	const tours = await responce.json()
+
+	const favoriteToursIds = getFavoriteTours()
+	const favoriteTours = tours.filter((tour) => {
+		const isFavorite = favoriteToursIds.includes(tour.id)
+		return isFavorite
+	})
+
+	renderTours(favoriteTours)
 }
 
 function removeUpperContainer(tour) {
@@ -336,11 +324,6 @@ buttonSendOrderRequest.addEventListener("click", sendOrderRequest)
 const buttonCloseModalReservation = document.getElementById("close_Modal_Reservation-button")
 buttonCloseModalReservation.addEventListener("click", closeModalReservation)
 
-
-
-
-renderTours()
-
 const buttonCloseAnswerToRequest = document.getElementById("answer-to-request_close_Button")
 buttonCloseAnswerToRequest.addEventListener("click", closeAnswerToRequest)
 
@@ -361,10 +344,14 @@ function changeTextColorInputPhone() {
     document.getElementById("phone-label").style.display = "flex"
 }
 
-
 function changeTextColorInputEmail() {
     inputEmail.style.color = "black"
     inputEmail.value = ""
 }
 inputEmail.addEventListener("click", changeTextColorInputEmail)
+
+document.getElementById("favorite-tours-btn").addEventListener('click', renderFavoriteTours)
+init()
+
+
 
