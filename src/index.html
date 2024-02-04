@@ -21,11 +21,8 @@
 
     <body>
         <div class="bg-slate-100 box-border">
-            <nav class="flex justify-end gap-x-5 bg-slate-100 box-border max-w-screen-xl mx-auto">
-                <a href="#container-tours" class="footer-link">Список туров</a>
-                <button class="footer-link flex gap-x-4 items-center" id="favorite-tours-btn">Избранное<i class="fa-regular fa-heart"></i></button>
-            </nav>
-            <div class="max-w-screen-xl mx-auto bg-slate-50 bg-slate-100">
+           
+            <div class="max-w-screen-xl mx-auto bg-slate-100">
                 <div class="grid grid-cols-2 relative shadow-2xl">
                     <img class="w-full h-full object-cover" src="/src/images/6.jpg"/>
                     <img class="w-full h-full object-cover" src="/src/images/5.jpg"/>
@@ -40,7 +37,54 @@
                     </div>
                 </div>
 
-                <div class="mt-12 md:mt-20 mb-20 grid grid-cols-1 gap-x-5 gap-y-8 bg-slate-50 md:grid-cols-2 lg:grid-cols-3 " id="container-tours"></div>
+                <nav class="flex justify-end gap-x-5 bg-slate-100 box-border max-w-screen-xl mx-auto">
+                    <button class="footer-link" id="filter-button"><i class="fa-solid fa-filter"></i></button>
+                    <button class="footer-link flex gap-x-4 items-center" id="favorite-tours-btn">Избранное<i class="fa-solid fa-heart"></i></i></button>
+                    
+                </nav>
+
+                <div class="hidden grid-cols-6 justify-end gap-x-5 bg-slate-50 box-border border rounded-sm border-gray-400 px-6 max-w-screen-xl mx-auto " id="filters">
+                    <div class="pb-5 w-full">
+                        <button class="footer-link w-full" id="raiting-dropbox-button">Рейтинг отеля</button>
+                        <div class="hidden grid-cols-3 gap-2 bg-slate-50 box-border border rounded-sm border-gray-400 p-6" id="raiting-dropbox">
+                            <p class="raiting-buttons" id="raiting-1">1</p>
+                            <p class="raiting-buttons" id="raiting-2">2</p>
+                            <p class="raiting-buttons" id="raiting-3">3</p>
+                            <p class="raiting-buttons" id="raiting-4">4</p>
+                            <p class="raiting-buttons" id="raiting-5">5</p>
+                            <p class="raiting-buttons" id="raiting-6">6</p>
+                            <p class="raiting-buttons" id="raiting-7">7</p>
+                            <p class="raiting-buttons" id="raiting-8">8</p>
+                            <p class="raiting-buttons" id="raiting-9">9</p>
+                        </div>
+                    </div>
+                    <div class="pb-5">
+                        <button class="footer-link w-full" id="price-dropbox-button">Цена</button>
+                        <div class="hidden flex-col text-slate-700" id="price-dropbox">
+                            <div class="filter-input-container">
+                                <label for="min-price">От</label>
+                                <input type="text" id="min-price" class="filter-input "/>
+                            </div>
+                            <div class="filter-input-container">
+                                <label for="max-price">до</label>
+                                <input type="text" id="max-price" class="filter-input"/>
+                            </div>
+                            <button class="footer-link" id="price-dropbox-button-show">Показать</button>
+                        </div>
+                    </div>
+                    
+
+                    <button class="footer-link" id="thailand">Тайланд</button>
+                    <button class="footer-link" id="maldives">Мальдивы</button>
+                    <button class="footer-link" id="indonezia">Индонезия</button>
+                    <div class="flex flex-col justify-between w-full">
+                        <button class="footer-link w-full" id="all">Все страны</button>
+                        <button class="footer-link w-full" id="all">Показать</button>
+                    </div>
+                    
+                </div>
+
+                <div class="mt-2 md:mt-6 mb-20 grid grid-cols-1 gap-x-5 gap-y-8 bg-slate-100 md:grid-cols-2 lg:grid-cols-3 " id="container-tours"></div>
 
                 <div class="hidden flex-col fixed inset-0 bg-black/70 z-50" id="modal-reservation">
                     <div class="max-w-screen-xl lg:w-1/2 mx-auto mt-2 flex">

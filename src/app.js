@@ -14,6 +14,19 @@ async function init() {
 
     // return 
     renderTours(tours)
+
+    document.getElementById("thailand").addEventListener('click',() => {
+        filterByCountry(tours, "Тайланд")
+    })
+    document.getElementById("maldives").addEventListener('click',() => {
+        filterByCountry(tours, "Мальдивы")
+    })
+    document.getElementById("indonezia").addEventListener('click',() => {
+        filterByCountry(tours, "Индонезия")
+    })
+    document.getElementById("all").addEventListener('click',() => {
+        filterByCountry(tours)
+    })
 }
 
 async function renderTours(tours) {
@@ -239,30 +252,28 @@ const getFavoriteTours = () => {
 }
 
 async function addToFavorites(tourId, tours) {
+    const favoriteToursIds = getFavoriteTours()
 
-    console.log(tourId)
+    const favoriteTours = tours.filter((t) => {
+		const isFavorite = favoriteToursIds.includes(t.id)
+		return isFavorite
+	})
 
-    const favoriteTours = getFavoriteTours()
-    console.log(favoriteTours)
+    const tour = tours.find((t) => {
+        return t.id === tourId
+    })
+    
+    const isFavorite = favoriteTours.includes(tour)
 
-    const isFavorite = favoriteTours.includes(tourId)
-    console.log(isFavorite)
-
-    const index = tours.indexOf(tourId)
-    console.log(index)
-
-    if(isFavorite){
-        favoriteTours.splice(index,1)
-        console.log(favoriteTours)
-        
-    }
-
-    const newFavoriteTours = [...favoriteTours, tourId]
-    // console.log(newFavoriteTours)
-
-    localStorage.setItem('favoriteTours', JSON.stringify(newFavoriteTours))
-
-    renderTours(tours)
+    if(isFavorite === false){
+        const newFavoriteTours = [...favoriteToursIds, tourId]  
+        localStorage.setItem('favoriteTours', JSON.stringify(newFavoriteTours))
+    }else{
+        const index = favoriteToursIds.indexOf(tourId)
+        favoriteToursIds.splice(index,1)
+        localStorage.setItem('favoriteTours', JSON.stringify(favoriteToursIds))    
+    } 
+    renderTours(tours)   
 }
 
 const renderFavoriteTours = async () => {
@@ -279,6 +290,110 @@ const renderFavoriteTours = async () => {
 
 	renderTours(favoriteTours)
 }
+
+let isOpenFilterContainer = false
+function openFilterContainer(){
+    if(isOpenFilterContainer === false){
+        document.getElementById("filters").style.display = "grid"
+        document.getElementById("filter-button").classList.remove('bg-slate-100')
+        document.getElementById("filter-button").classList.add('bg-slate-300')    
+        isOpenFilterContainer = true
+    }else{
+        document.getElementById("filters").style.display = "none"
+        document.getElementById("filter-button").classList.remove('bg-slate-300')
+        document.getElementById("filter-button").classList.add('bg-slate-100')
+        isOpenFilterContainer = false
+    }
+    document.getElementById("raiting-dropbox-button").addEventListener('click', openRaitingDropbox)
+    document.getElementById("price-dropbox-button").addEventListener('click', openPriceDropbox)
+}
+
+function filterByCountry(tours, country) {
+    if(country){
+        const filteredTours = tours.filter ((tour) => {
+            return tour.country === country
+         })
+         renderTours(filteredTours)
+    } else {
+        renderTours(tours)
+    }    
+}
+
+function filterByRaiting(tours, raiting){
+    console.log(raiting)
+    const filteredTours = tours.filter ((tour) =>{
+        return tour.rating >= raiting
+    })
+    renderTours(filteredTours)
+}
+
+let isOpenRaitingDropbox = false
+async function openRaitingDropbox(){
+    if(isOpenRaitingDropbox === false){
+        document.getElementById("raiting-dropbox").style.display = "grid"
+        document.getElementById("raiting-dropbox-button").classList.remove('bg-slate-100')
+        document.getElementById("raiting-dropbox-button").classList.add('bg-slate-300')
+        isOpenRaitingDropbox = true
+    }else{
+        document.getElementById("raiting-dropbox").style.display = "none"
+        document.getElementById("raiting-dropbox-button").classList.remove('bg-slate-300')
+        document.getElementById("raiting-dropbox-button").classList.add('bg-slate-100')
+        isOpenRaitingDropbox = false
+    }
+    const responce = await fetch(
+		"https://www.bit-by-bit.ru/api/student-projects/tours"
+	)
+	tours = await responce.json()
+    document.getElementById("raiting-1").addEventListener("click", async () => {filterByRaiting(tours, 1) })
+    document.getElementById("raiting-2").addEventListener("click", async () => {filterByRaiting(tours, 2) })
+    document.getElementById("raiting-3").addEventListener("click", async () => {filterByRaiting(tours, 3) })
+    document.getElementById("raiting-4").addEventListener("click", async () => {filterByRaiting(tours, 4) })
+    document.getElementById("raiting-5").addEventListener("click", async () => {filterByRaiting(tours, 5) })
+    document.getElementById("raiting-6").addEventListener("click", async () => {filterByRaiting(tours, 6) })
+    document.getElementById("raiting-7").addEventListener("click", async () => {filterByRaiting(tours, 7) })
+    document.getElementById("raiting-8").addEventListener("click", async () => {filterByRaiting(tours, 8) })
+    document.getElementById("raiting-9").addEventListener("click", async () => {filterByRaiting(tours, 9) })
+}
+
+function filterByPrice(tours){
+    const minPrice = document.getElementById("min-price").value
+    const maxPrice = document.getElementById("max-price").value
+    console.log(minPrice, maxPrice)
+    const filteredTours = tours.filter ((tour) =>{
+       if(tour.price >= minPrice && tour.price <= maxPrice){
+        return tour.price
+       }
+    })
+    
+    renderTours(filteredTours)
+}
+
+let isOpenPriceDropbox = false
+async function openPriceDropbox(){
+    if(isOpenPriceDropbox === false){
+        document.getElementById("price-dropbox").style.display = "flex"
+        document.getElementById("price-dropbox-button").classList.remove('bg-slate-100')
+        document.getElementById("price-dropbox-button").classList.add('bg-slate-300')
+        isOpenPriceDropbox = true
+    }else{
+        document.getElementById("price-dropbox").style.display = "none"
+        document.getElementById("price-dropbox-button").classList.remove('bg-slate-300')
+        document.getElementById("price-dropbox-button").classList.add('bg-slate-100')
+        isOpenPriceDropbox = false
+    }
+    const responce = await fetch(
+		"https://www.bit-by-bit.ru/api/student-projects/tours"
+	)
+	tours = await responce.json()
+
+    
+
+    document.getElementById('price-dropbox-button-show').addEventListener("click", async () => {filterByPrice(tours)})
+}
+
+// const toursFilterByCountry = filterByCountry(tours, "Индонезия")
+
+// function filterByAllFilters()
 
 function removeUpperContainer(tour) {
     const upperContainer = document.getElementById(`container-upper-${tour.id}`)
@@ -318,15 +433,6 @@ function closeAnswerToRequest(){
     document.getElementById("answer-to-request").style.display = "none"
 }
 
-const buttonSendOrderRequest = document.getElementById("sendOrderRequest_button")
-buttonSendOrderRequest.addEventListener("click", sendOrderRequest)
-
-const buttonCloseModalReservation = document.getElementById("close_Modal_Reservation-button")
-buttonCloseModalReservation.addEventListener("click", closeModalReservation)
-
-const buttonCloseAnswerToRequest = document.getElementById("answer-to-request_close_Button")
-buttonCloseAnswerToRequest.addEventListener("click", closeAnswerToRequest)
-
 function changeTextColorInputFirstName() {
     inputFirstName.style.color = "black"
     inputFirstName.value = ""
@@ -350,7 +456,24 @@ function changeTextColorInputEmail() {
 }
 inputEmail.addEventListener("click", changeTextColorInputEmail)
 
+
+
+const buttonSendOrderRequest = document.getElementById("sendOrderRequest_button")
+buttonSendOrderRequest.addEventListener("click", sendOrderRequest)
+
+const buttonCloseModalReservation = document.getElementById("close_Modal_Reservation-button")
+buttonCloseModalReservation.addEventListener("click", closeModalReservation)
+
+const buttonCloseAnswerToRequest = document.getElementById("answer-to-request_close_Button")
+buttonCloseAnswerToRequest.addEventListener("click", closeAnswerToRequest)
+
 document.getElementById("favorite-tours-btn").addEventListener('click', renderFavoriteTours)
+
+document.getElementById("filter-button").addEventListener('click', openFilterContainer)
+
+// document.getElementById("reiting-dropbox-button").addEventListener('click', openReitingDropbox)
+
+
 init()
 
 
