@@ -27,6 +27,8 @@ async function init() {
     document.getElementById("all").addEventListener('click',() => {
         filterByCountry(tours)
     })
+    document.getElementById("all-tours-button").addEventListener('click', () => {renderTours(tours)
+    })
 }
 
 async function renderTours(tours) {
@@ -471,7 +473,7 @@ document.getElementById("favorite-tours-btn").addEventListener('click', renderFa
 
 document.getElementById("filter-button").addEventListener('click', openFilterContainer)
 
-// document.getElementById("reiting-dropbox-button").addEventListener('click', openReitingDropbox)
+
 
 
 init()
